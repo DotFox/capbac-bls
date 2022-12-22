@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package capbac_bls;
+
+option java_package = "dev.dotfox.capbac";
+option java_outer_classname = "CapBACProto";
+
+message Certificate {
+  message Payload {
+    Certificate.Payload parent = 1;
+    string issuer = 2;
+    string subject = 3;
+    uint64 expiration = 4;
+    string content_type = 5;
+    bytes capability = 6;
+  }
+  bytes payload = 1;
+  bytes signature = 2;
+}
+
+message Invocation {
+  message Payload {
+    Certificate.Payload certificate = 1;
+    string invoker = 2;
+    uint64 expiration = 3;
+    string content_type = 4;
+    bytes action = 5;
+  }
+  bytes payload = 1;
+  bytes signature = 2;
+}

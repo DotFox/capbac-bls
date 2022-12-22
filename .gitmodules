@@ -1,0 +1,4 @@
+[submodule "blst"]
+	path = blst
+	url = https://github.com/supranational/blst.git
+	branch = v0.3.10
