@@ -2,16 +2,47 @@ name: CI
 on: [push]
 
 jobs:
-  build-blst-bindings:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+  build-blst-linux-x86_64:
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
+      - name: Build x86_64
+        run: ./run.me
+        working-directory: ./blst/bindings/java
 
-      - name: Build BLST bindings
-        run: ./build.sh
-        working-directory: ./blst
+  build-blst-linux-arm64:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Build aarch64
+        uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: aarch64
+          distro: ubuntu22.04
+
+          # Not required, but speeds up builds
+          githubToken: ${{ github.token }}
+
+          # Create an artifacts directory
+          setup: |
+            mkdir -p "${PWD}/artifacts"
+
+          # Mount the artifacts directory as /artifacts in the container
+          dockerRunArgs: |
+            --volume "${PWD}/artifacts:/artifacts"
+
+          install: |
+            apt-get update -q -y
+            apt-get install -q -y git
+
+          run: |
+            cd blst/bindings/java
+            ./run.me
+            mv blst/bindings/java/supranational /artifacts/
+
+      - name: Check
+        run: ls -al ./artifacts
