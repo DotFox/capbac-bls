@@ -134,3 +134,34 @@ jobs:
         with:
           name: windows
           path: ./blst/bindings/java/supranational/blst/Windows
+
+  build-capbac-package:
+    runs-on: ubuntu-22.04
+    needs: [build-blst-linux-amd64, build-blst-linux-aarch64, build-blst-windows, build-blst-macos]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: linux-amd64
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: linux-aarch64
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: windows
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: macos
+
+      - run: mvn package
