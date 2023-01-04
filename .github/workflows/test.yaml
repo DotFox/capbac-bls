@@ -2,7 +2,7 @@ name: CI
 on: [push]
 
 jobs:
-  build-blst-linux-amd64:
+  build-blst-linux:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -18,18 +18,6 @@ jobs:
         run: ./run.me
         working-directory: ./blst/bindings/java
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linux-amd64
-          path: ./blst/bindings/java/supranational/blst/Linux
-
-  build-blst-linux-aarch64:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
       - name: Build blst
         uses: uraimo/run-on-arch-action@v2
         with:
@@ -39,13 +27,9 @@ jobs:
           # Not required, but speeds up builds
           githubToken: ${{ github.token }}
 
-          # Create an artifacts directory
-          setup: |
-            mkdir -p "${PWD}/artifacts"
-
           # Mount the artifacts directory as /artifacts in the container
           dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts"
+            --volume "${PWD}/blst/bindings/java/supranational/blst:/blst/bindings/java/supranational/blst"
 
           install: |
             apt-get update -q -y
@@ -57,17 +41,13 @@ jobs:
             apt-get install -q -y temurin-11-jdk
 
           run: |
-            cd blst/bindings/java
+            cd ./blst/bindings/java
             ./run.me
-            mv ./supranational /artifacts/
-
-      - name: Check
-        run: ls -al ./artifacts
 
       - uses: actions/upload-artifact@v3
         with:
-          name: linux-aarch64
-          path: ./artifacts/blst/Linux
+          name: linux
+          path: ./blst/bindings/java/supranational/blst/Linux
 
   build-blst-macos:
     runs-on: macos-latest
@@ -137,7 +117,7 @@ jobs:
 
   build-capbac-package:
     runs-on: ubuntu-22.04
-    needs: [build-blst-linux-amd64, build-blst-linux-aarch64, build-blst-windows, build-blst-macos]
+    needs: [build-blst-linux, build-blst-windows, build-blst-macos]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -150,11 +130,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: linux-amd64
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: linux-aarch64
+          name: linux
 
       - uses: actions/download-artifact@v3
         with:
