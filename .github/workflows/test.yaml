@@ -1,0 +1,17 @@
+name: CI
+on: [push]
+
+jobs:
+  build-blst-bindings:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build BLST bindings
+        run: ./run.me
+        working-directory: ./blst/bindings/java
