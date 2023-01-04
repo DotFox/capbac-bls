@@ -141,9 +141,6 @@ jobs:
           name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
 
-      - run: ls -R
-        working-directory: ./blst/bindings/java/supranational/blst
-
-      - run: mv ./blst/bindings/java/supranational ./src/main/java/
+      - run: rm ./src/main/java/supranational && mv ./blst/bindings/java/supranational ./src/main/java/
 
       - run: mvn package
