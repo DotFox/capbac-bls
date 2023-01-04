@@ -127,10 +127,10 @@ jobs:
           java-version: '11'
 
       - name: Build blst
-        run: ./run.me
+        run: sh .\run.me
         working-directory: ./blst/bindings/java
 
       - uses: actions/upload-artifact@v3
         with:
-          name: macos
+          name: windows
           path: ./blst/bindings/java/supranational/blst/Windows
