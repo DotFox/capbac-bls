@@ -89,3 +89,30 @@ jobs:
         with:
           name: macos-amd64
           path: ./blst/bindings/java/supranational/blst/Mac
+
+  build-blst-macos-aarch64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build blst
+        run: ./run.me
+        working-directory: ./blst/bindings/java
+        env:
+          CC: "cc -arch arm64"
+          CXX: "c++ -arch arm64 -std=c++11"
+
+      - run: |
+          mv ./blst/bindings/java/supranational/blst/Mac/x86_64 ./blst/bindings/java/supranational/blst/Mac/aarch64
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: macos-amd64
+          path: ./blst/bindings/java/supranational/blst/Mac
