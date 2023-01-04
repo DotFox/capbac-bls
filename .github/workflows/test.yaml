@@ -138,4 +138,7 @@ jobs:
           name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
 
+      - run: ls -R
+        working-directory: ./blst/bindings/java/supranational/blst
+
       - run: mvn package
