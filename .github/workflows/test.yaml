@@ -14,11 +14,11 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Build blst
-        run: ./run.me
+      - name: Build blst-amd64
+        run: ./build.sh
         working-directory: ./blst/bindings/java
 
-      - name: Build blst
+      - name: Build blst-aarch64
         uses: uraimo/run-on-arch-action@v2
         with:
           arch: aarch64
@@ -42,7 +42,7 @@ jobs:
 
           run: |
             cd ./blst/bindings/java
-            ./run.me
+            ./build.sh
 
       - uses: actions/upload-artifact@v3
         with:
@@ -61,7 +61,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name:  Build arm64
+      - name:  Build aarch64
         run: ./build.sh
         working-directory: ./blst
         env:
@@ -85,10 +85,6 @@ jobs:
         run: ./build.sh
         working-directory: ./blst
 
-      - name: Build bindings
-        run: ./run.me
-        working-directory: ./blst/bindings/java
-
       - uses: actions/upload-artifact@v3
         with:
           name: macos
@@ -107,7 +103,7 @@ jobs:
           java-version: '11'
 
       - name: Build blst
-        run: sh .\run.me
+        run: sh .\build.sh
         working-directory: ./blst/bindings/java
 
       - uses: actions/upload-artifact@v3
