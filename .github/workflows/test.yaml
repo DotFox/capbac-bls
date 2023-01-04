@@ -144,6 +144,6 @@ jobs:
       - run: ls -R
         working-directory: ./blst/bindings/java/supranational/blst
 
-      - run: mv ./blst/bindings/java/supranational ./src/main/java/supranational
+      - run: mv ./blst/bindings/java/supranational ./src/main/java/
 
       - run: mvn package
