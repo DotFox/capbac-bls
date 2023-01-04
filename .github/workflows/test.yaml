@@ -105,7 +105,7 @@ jobs:
         run: ./build.sh
         working-directory: ./blst
 
-      - name: Build blst
+      - name: Build bindings
         run: ./run.me
         working-directory: ./blst/bindings/java
 
@@ -113,3 +113,24 @@ jobs:
         with:
           name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
+
+  build-blst-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build blst
+        run: ./run.me
+        working-directory: ./blst/bindings/java
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: ./blst/bindings/java/supranational/blst/Windows
