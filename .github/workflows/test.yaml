@@ -149,7 +149,7 @@ jobs:
           name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
 
-      - run: apt-get update && apt-get install tree
+      - run: apt-get install tree
 
       - run: tree ./blst/bindings/java
 
