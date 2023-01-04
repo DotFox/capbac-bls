@@ -14,4 +14,4 @@ jobs:
 
       - name: Build BLST bindings
         run: ./build.sh
-        working-directory: ./blst/bindings/java
+        working-directory: ./blst
