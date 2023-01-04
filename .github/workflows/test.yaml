@@ -2,17 +2,22 @@ name: CI
 on: [push]
 
 jobs:
-  build-blst-linux-x86_64:
+  build-blst-linux-amd64:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Build x86_64
+      - name: Build amd64
         run: ./run.me
         working-directory: ./blst/bindings/java
 
-  build-blst-linux-arm64:
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-amd64
+          path: ./blst/bindings/java/supranational/blst/Linux
+
+  build-blst-linux-aarch64:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -37,7 +42,7 @@ jobs:
 
           install: |
             apt-get update -q -y
-            apt-get install -q -y git wget apt-transport-https swig
+            apt-get install -q -y git wget apt-transport-https swig gcc binutils g++
             mkdir -p /etc/apt/keyrings
             wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | tee /etc/apt/keyrings/adoptium.asc
             echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
@@ -51,3 +56,8 @@ jobs:
 
       - name: Check
         run: ls -al ./artifacts
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-aarch64
+          path: ./artifacts/blst/Linux
