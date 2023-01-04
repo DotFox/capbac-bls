@@ -69,7 +69,7 @@ jobs:
           name: linux-aarch64
           path: ./artifacts/blst/Linux
 
-  build-blst-macos-amd64:
+  build-blst-macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -81,38 +81,33 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Build blst
-        run: ./run.me
-        working-directory: ./blst/bindings/java
+      - name:  Build arm64
+        run: ./build.sh
+        env:
+          CC: "cc -arch arm64"
+          CXX: "c++ -arch arm64 -std=c++11"
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: macos-amd64
-          path: ./blst/bindings/java/supranational/blst/Mac
-
-  build-blst-macos-aarch64:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Build blst
-        run: ./run.me
+      - name: Build bindings arm64
+        run: ./build.sh
         working-directory: ./blst/bindings/java
         env:
           CC: "cc -arch arm64"
           CXX: "c++ -arch arm64 -std=c++11"
 
-      - run: |
-          mv ./blst/bindings/java/supranational/blst/Mac/x86_64 ./blst/bindings/java/supranational/blst/Mac/aarch64
+      - run: mv ./x86_64 ./aarch64
+        working-directory: ./blst/bindings/java/supranational/blst/Mac
+
+      - run: rm -rf libblst.a supranational.blst.jar
+        working-directory: ./blst/bindings/java
+
+      - name:  Build amd64
+        run: ./build.sh
+
+      - name: Build blst
+        run: ./run.me
+        working-directory: ./blst/bindings/java
 
       - uses: actions/upload-artifact@v3
         with:
-          name: macos-amd64
+          name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
