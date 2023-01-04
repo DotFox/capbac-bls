@@ -83,6 +83,7 @@ jobs:
 
       - name:  Build arm64
         run: ./build.sh
+        working-directory: ./blst
         env:
           CC: "cc -arch arm64"
           CXX: "c++ -arch arm64 -std=c++11"
@@ -102,6 +103,7 @@ jobs:
 
       - name:  Build amd64
         run: ./build.sh
+        working-directory: ./blst
 
       - name: Build blst
         run: ./run.me
