@@ -88,6 +88,10 @@ jobs:
         run: ./build.sh
         working-directory: ./blst
 
+      - name: Build bindings amd64
+        run: ./build.sh
+        working-directory: ./blst/bindings/java
+
       - run: ls -al ./blst/bindings/java/supranational/blst/Mac
 
       - uses: actions/upload-artifact@v3
@@ -135,14 +139,17 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: linux
+          path: ./blst/bindings/java/supranational/blst/Linux
 
       - uses: actions/download-artifact@v3
         with:
           name: windows
+          path: ./blst/bindings/java/supranational/blst/Windows
 
       - uses: actions/download-artifact@v3
         with:
           name: macos
+          path: ./blst/bindings/java/supranational/blst/Mac
 
       - run: ls -al ./blst/bindings/java/supranational/blst
 
