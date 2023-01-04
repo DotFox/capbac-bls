@@ -15,7 +15,7 @@ jobs:
           java-version: '11'
 
       - name: Build blst-amd64
-        run: ./build.sh
+        run: ./build.sh -D__BLST_PORTABLE__
         working-directory: ./blst/bindings/java
 
       - run: rm -rf libblst.a supranational.blst.jar
@@ -45,7 +45,7 @@ jobs:
 
           run: |
             cd ./blst/bindings/java
-            ./build.sh
+            ./build.sh -D__BLST_PORTABLE__
 
       - uses: actions/upload-artifact@v3
         with:
@@ -64,15 +64,8 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name:  Build aarch64
-        run: ./build.sh
-        working-directory: ./blst
-        env:
-          CC: "cc -arch arm64"
-          CXX: "c++ -arch arm64 -std=c++11"
-
       - name: Build bindings arm64
-        run: ./build.sh
+        run: ./build.sh -D__BLST_PORTABLE__
         working-directory: ./blst/bindings/java
         env:
           CC: "cc -arch arm64"
@@ -84,12 +77,8 @@ jobs:
       - run: rm -rf libblst.a supranational.blst.jar
         working-directory: ./blst/bindings/java
 
-      - name:  Build amd64
-        run: ./build.sh
-        working-directory: ./blst
-
       - name: Build bindings amd64
-        run: ./build.sh
+        run: ./build.sh -D__BLST_PORTABLE__
         working-directory: ./blst/bindings/java
 
       - uses: actions/upload-artifact@v3
@@ -110,7 +99,7 @@ jobs:
           java-version: '11'
 
       - name: Build blst
-        run: sh .\build.sh
+        run: sh .\build.sh -D__BLST_PORTABLE__
         working-directory: ./blst/bindings/java
 
       - uses: actions/upload-artifact@v3
@@ -148,9 +137,5 @@ jobs:
         with:
           name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
-
-      - run: apt-get install tree
-
-      - run: tree ./blst/bindings/java
 
       - run: mvn package
