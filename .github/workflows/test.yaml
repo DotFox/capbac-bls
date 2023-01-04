@@ -18,6 +18,9 @@ jobs:
         run: ./build.sh
         working-directory: ./blst/bindings/java
 
+      - run: rm -rf libblst.a supranational.blst.jar
+        working-directory: ./blst/bindings/java
+
       - name: Build blst-aarch64
         uses: uraimo/run-on-arch-action@v2
         with:
