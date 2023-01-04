@@ -8,7 +8,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Build amd64
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build blst
         run: ./run.me
         working-directory: ./blst/bindings/java
 
@@ -23,7 +29,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Build aarch64
+
+      - name: Build blst
         uses: uraimo/run-on-arch-action@v2
         with:
           arch: aarch64
@@ -52,7 +59,7 @@ jobs:
           run: |
             cd blst/bindings/java
             ./run.me
-            mv blst/bindings/java/supranational /artifacts/
+            mv ./supranational /artifacts/
 
       - name: Check
         run: ls -al ./artifacts
@@ -61,3 +68,24 @@ jobs:
         with:
           name: linux-aarch64
           path: ./artifacts/blst/Linux
+
+  build-blst-macos-amd64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build blst
+        run: ./run.me
+        working-directory: ./blst/bindings/java
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: macos-amd64
+          path: ./blst/bindings/java/supranational/blst/Mac
