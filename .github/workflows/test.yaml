@@ -88,6 +88,8 @@ jobs:
         run: ./build.sh
         working-directory: ./blst
 
+      - run: ls -al ./blst/bindings/java/supranational/blst/Mac
+
       - uses: actions/upload-artifact@v3
         with:
           name: macos
@@ -127,6 +129,9 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
+      - run: ./build.sh
+        working-directory: ./blst/bindings/java
+
       - uses: actions/download-artifact@v3
         with:
           name: linux
@@ -138,5 +143,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: macos
+
+      - run: ls -al ./blst/bindings/java/supranational/blst
 
       - run: mvn package
