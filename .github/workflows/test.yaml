@@ -13,5 +13,5 @@ jobs:
           submodules: true
 
       - name: Build BLST bindings
-        run: ./run.me
+        run: ./build.sh
         working-directory: ./blst/bindings/java
