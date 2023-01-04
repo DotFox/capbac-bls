@@ -92,8 +92,6 @@ jobs:
         run: ./build.sh
         working-directory: ./blst/bindings/java
 
-      - run: ls -al ./blst/bindings/java/supranational/blst/Mac
-
       - uses: actions/upload-artifact@v3
         with:
           name: macos
@@ -151,6 +149,8 @@ jobs:
           name: macos
           path: ./blst/bindings/java/supranational/blst/Mac
 
-      - run: ls -al ./blst/bindings/java/supranational/blst
+      - run: apt-get update && apt-get install tree
+
+      - run: tree ./blst/bindings/java
 
       - run: mvn package
