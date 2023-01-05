@@ -5,12 +5,25 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import dev.dotfox.bls.impl.BLS12381;
-import dev.dotfox.bls.impl.blst.BlstBLS12381;
+import dev.dotfox.bls.impl.BlsException;
+import dev.dotfox.bls.impl.blst.BlstLoader;
 import dev.dotfox.bls.impl.blst.BlstPublicKey;
 import dev.dotfox.bls.impl.blst.BlstSignature;
 
 public class BLS {
-    private static BLS12381 impl = new BlstBLS12381();
+    private static BLS12381 impl;
+
+    static {
+        resetBlsImplementation();
+    }
+
+    private static void resetBlsImplementation() {
+        if (BlstLoader.INSTANCE.isPresent()) {
+            impl = BlstLoader.INSTANCE.get();
+        } else {
+            throw new BlsException("Failed to load Blst library.");
+        }
+    }
 
     public static BLSKeyPair keyGen() {
         BLSSecretKey sk = new BLSSecretKey(impl.keyGen());
