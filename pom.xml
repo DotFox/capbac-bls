@@ -19,6 +19,13 @@
     <protobuf.version>3.21.12</protobuf.version>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>consensys</id>
+      <url>https://artifacts.consensys.net/public/maven/maven/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
 
     <dependency>
@@ -33,11 +40,18 @@
       <version>${protobuf.version}</version>
     </dependency>
     <dependency>
+      <groupId>tech.pegasys</groupId>
+      <artifactId>jblst</artifactId>
+      <version>0.3.8</version>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
   <build>
