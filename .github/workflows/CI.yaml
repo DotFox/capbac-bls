@@ -2,7 +2,7 @@ name: CI
 on: [push]
 
 jobs:
-  build:
+  java-test:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -12,10 +12,12 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - run: mvn package
+      - name: Run tests
+        run: mvn test
+        working-directory: ./java
 
-  publish:
-    needs: [build]
+  java-publish:
+    needs: [java-test]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,5 +32,6 @@ jobs:
 
       - name: Publish package
         run: mvn --batch-mode deploy
+        working-directory: ./java
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
