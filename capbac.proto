@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package capbac_bls;
 
-option java_package = "dev.dotfox.capbac";
+option java_package = "dotfox.capbac";
 option java_outer_classname = "CapBACProto";
 
 message Certificate {
