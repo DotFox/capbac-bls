@@ -6,7 +6,7 @@
 
   <groupId>dev.dotfox</groupId>
   <artifactId>capbac-bls</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.1-SNAPSHOT</version>
 
   <name>capbac-bls</name>
   <!-- FIXME change it to the project's website -->

@@ -31,9 +31,9 @@ public class BLSSignature {
             return false;
         BLSSignature other = (BLSSignature) obj;
         if (signature == null) {
-            if (other.signature != null)
+            if (other.getSignature() != null)
                 return false;
-        } else if (!signature.equals(other.signature))
+        } else if (!signature.equals(other.getSignature()))
             return false;
         return true;
     }

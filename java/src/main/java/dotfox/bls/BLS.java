@@ -36,7 +36,7 @@ public class BLS {
     }
 
     public static BLSSignature aggregate(List<? extends BLSSignature> signatures) {
-        return new BLSSignature(impl.aggregate(signatures.stream().map((BLSSignature signature) -> signature.signature).collect(Collectors.toList())));
+        return new BLSSignature(impl.aggregate(signatures.stream().map((BLSSignature sign) -> sign.getSignature()).collect(Collectors.toList())));
     }
 
     public static BLSSignature signAndAggregate(BLSSecretKey sk, byte[] message, BLSSignature aggregatedSignature) {
@@ -44,10 +44,10 @@ public class BLS {
         return aggregate(Arrays.asList(aggregatedSignature, signature));
     }
 
-    public static boolean aggregateVerify(List<? extends BLSPublicKey> pks, List<byte[]> messages, BLSSignature signature) {
+    public static boolean aggregateVerify(List<? extends BLSPublicKey> pks, List<byte[]> messages, BLSSignature sign) {
         return impl.aggregateVerify(pks.stream().map((BLSPublicKey pk) -> pk.getPk()).collect(Collectors.toList()),
                                     messages,
-                                    signature.signature);
+                                    sign.getSignature());
     }
 
     public static BLSSignature signatureFromBytes(byte[] payload) {
