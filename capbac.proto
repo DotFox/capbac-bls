@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package capbac_bls;
+package capbac;
 
 option java_package = "dotfox.capbac";
 option java_outer_classname = "CapBACProto";

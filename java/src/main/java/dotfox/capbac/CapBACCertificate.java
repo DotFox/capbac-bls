@@ -19,6 +19,7 @@ public class CapBACCertificate implements Iterable<CapBACCertificate> {
         URI subject;
         byte[] capability;
         long exp = 0;
+        String contentType = DEFAULT_CONTENT_TYPE;
 
         public Builder(URI subject, byte[] capability) {
             this.subject = subject;
@@ -27,6 +28,11 @@ public class CapBACCertificate implements Iterable<CapBACCertificate> {
 
         public Builder withExp(long exp) {
             this.exp = exp;
+            return this;
+        }
+
+        public Builder withContentType(String contentType) {
+            this.contentType = contentType;
             return this;
         }
 
@@ -69,6 +75,7 @@ public class CapBACCertificate implements Iterable<CapBACCertificate> {
         payloadBuilder.setCapability(ByteString.copyFrom(builder.capability));
         payloadBuilder.setExpiration(builder.exp);
         payloadBuilder.setSubject(builder.subject.toString());
+        payloadBuilder.setContentType(builder.contentType);
         payloadBuilder.setIssuer(signer.me.toString());
         if (parent != null) {
             payloadBuilder.setParent(parent.payload);
@@ -127,6 +134,10 @@ public class CapBACCertificate implements Iterable<CapBACCertificate> {
 
     public byte[] getPayloadBytes() {
         return payload.toByteArray();
+    }
+
+    public byte[] getBytes() {
+        return proto.toByteArray();
     }
 
     public String getContentType() {

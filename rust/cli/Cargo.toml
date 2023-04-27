@@ -1,0 +1,24 @@
+[package]
+name = "capbac-bls-cli"
+version = "0.0.1"
+authors = ["prepor <ceo@prepor.ru>", "DeLaGuardo <kirill@dotfox.dev>"]
+edition = "2021"
+
+description = "Command line utility for Capability-based Access Control model"
+documentation = "https://docs.rs/capbac-bls"
+homepage = "http://capbac.org"
+repository = "https://github.com/DotFox/capbac-bls"
+readme = "README.md"
+keywords = ["security", "capbac"]
+license = "MIT"
+
+[dependencies]
+protobuf = "2.28.0"
+structopt = "0.3.26"
+url = "2.3.1"
+http = "0.2.8"
+openssl = "0.10.43"
+regex = "1.7.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+capbac-bls = { path = "../lib", version = "0.0.1" }

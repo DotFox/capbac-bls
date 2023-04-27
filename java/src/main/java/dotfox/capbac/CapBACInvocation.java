@@ -14,6 +14,7 @@ public class CapBACInvocation {
     public static class Builder {
         byte[] action;
         long exp = 0;
+        String contentType = DEFAULT_CONTENT_TYPE;
 
         public Builder(byte[] action) {
             this.action = action;
@@ -21,6 +22,11 @@ public class CapBACInvocation {
 
         public Builder withExp(long exp) {
             this.exp = exp;
+            return this;
+        }
+
+        public Builder withContentType(String contentType) {
+            this.contentType = contentType;
             return this;
         }
     }
@@ -37,6 +43,7 @@ public class CapBACInvocation {
     CapBACInvocation(CapBACCertificate certificate, Builder builder, CapBACHolder signer) {
         CapBACProto.Invocation.Payload.Builder payloadBuilder = CapBACProto.Invocation.Payload.newBuilder();
         payloadBuilder.setAction(ByteString.copyFrom(builder.action));
+        payloadBuilder.setContentType(builder.contentType);
         payloadBuilder.setInvoker(signer.me.toString());
         payloadBuilder.setCertificate(certificate.payload);
         payloadBuilder.setExpiration(builder.exp);
@@ -78,6 +85,10 @@ public class CapBACInvocation {
 
     public byte[] getPayloadBytes() {
         return payload.toByteArray();
+    }
+
+    public byte[] getBytes() {
+        return proto.toByteArray();
     }
 
     public String getContentType() {

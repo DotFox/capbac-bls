@@ -1,0 +1,27 @@
+
+[package]
+name = "capbac-bls"
+version = "0.0.1"
+authors = ["prepor <ceo@prepor.ru>", "DeLaGuardo <kirill@dotfox.dev>"]
+edition = "2021"
+
+description = "Reference implementation for Capability-based Access Control model with BLS signing algorythm"
+documentation = "https://docs.rs/capbac-bls"
+homepage = "http://capbac.org"
+repository = "https://github.com/DotFox/capbac-bls"
+readme = "README.md"
+keywords = ["security", "capbac"]
+license = "MIT"
+
+[dependencies]
+http = "0.2.8"
+thiserror = "1.0.37"
+blst = "0.3.10"
+fastcrypto = "0.1.4"
+prost = "0.11"
+
+[build-dependencies]
+prost-build = "0.11"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
